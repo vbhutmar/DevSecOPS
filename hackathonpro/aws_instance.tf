@@ -28,8 +28,8 @@ resource "aws_instance" "web" {
   EOF
   
   vpc_security_group_ids = [
-    module.ec2_sg.this_security_group_id,
-    module.dev_ssh_sg.this_security_group_id
+    module.ec2_sg.id,
+    module.dev_ssh_sg.id
   ]
   iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
 
