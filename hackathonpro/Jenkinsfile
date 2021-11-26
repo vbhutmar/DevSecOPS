@@ -6,6 +6,7 @@ pipeline {
         string(name: 'region', defaultValue: 'ap-south-1', description: 'select region to deployment')
         string(name: 'env', defaultValue: 'dev', description: 'select environment to deployment')
         string(name: 'service', defaultValue: 'apache', description: 'please provide service name')
+        string(name: 'action', defaultValue: 'apply', description: 'please provide service name')
         booleanParam(name: 'autoApprove', defaultValue: false, description: 'Automatically run apply after generating plan?')
 
     }
@@ -65,9 +66,9 @@ pipeline {
           }
       }
 
-        stage('Destroy') {
+        stage('${action}') {
             steps {
-                sh "cd hackathonpro ; terraform destroy --auto-approve"
+                sh "cd hackathonpro ; terraform ${action} --auto-approve"
             }
         }
       
