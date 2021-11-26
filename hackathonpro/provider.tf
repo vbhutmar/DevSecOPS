@@ -3,7 +3,7 @@ provider "aws" {
   version = "~> 3.67.0"
 }
 
-data "aws_vpc" "default" {
+data "aws_vpc" "vpc" {
   default = true
 }
 
