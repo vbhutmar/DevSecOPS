@@ -65,9 +65,9 @@ pipeline {
           }
       }
 
-        stage('Apply') {
+        stage('Destroy') {
             steps {
-                sh "cd hackathonpro ; terraform apply -input=false tfplan "
+                sh "cd hackathonpro ; terraform destroy -input=false tfplan "
             }
         }
       
