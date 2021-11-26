@@ -30,7 +30,7 @@ pipeline {
         stage('Plan') {
             steps {
                 sh '''
-                  cd devsecops ;
+                  cd hackathonpro ;
                   terraform init \
                       -upgrade=true \
                       -get=true \
@@ -42,7 +42,7 @@ pipeline {
                       -backend-config "region=${region}"
                 '''
                 sh """#!/bin/bash
-                  cd devsecops ; terraform workspace show | grep ${environment} ; if [ "\$?" == 0 ];then echo "workspace already exists ";else terraform workspace new ${environment}; fi;
+                  cd hackathonpro ; terraform workspace show | grep ${environment} ; if [ "\$?" == 0 ];then echo "workspace already exists ";else terraform workspace new ${environment}; fi;
                 echo "INFO: Terraform -> Working for ${environment}";
                 terraform plan -var region=${region} -out tfplan -lock=true;
                 terraform show -no-color tfplan > tfplan.txt;
@@ -67,7 +67,7 @@ pipeline {
 
         stage('Apply') {
             steps {
-                sh "cd devsecops ; terraform apply -input=false tfplan "
+                sh "cd hackathonpro ; terraform apply -input=false tfplan "
             }
         }
       
