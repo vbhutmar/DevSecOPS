@@ -1,1 +1,76 @@
-test
+
+pipeline {
+
+    parameters {
+        string(name: 'environment', defaultValue: 'terraform', description: 'Workspace/environment file to use for deployment')
+        string(name: 'region', defaultValue: 'ap-south-1', description: 'select region to deployment')
+        string(name: 'env', defaultValue: 'dev', description: 'select environment to deployment')
+        string(name: 'service', defaultValue: 'apache', description: 'please provide service name')
+        booleanParam(name: 'autoApprove', defaultValue: false, description: 'Automatically run apply after generating plan?')
+
+    }
+
+
+     environment {
+        AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
+        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+    }
+
+   agent  any
+        options {
+                timestamps ()
+            }
+    stages {
+        stage('checkout') {
+            steps {
+                  git branch: "master", url: "https://github.com/vbhutmar/DevSecOps.git"
+                  }
+            }
+
+        stage('Plan') {
+            steps {
+                sh '''
+                  cd hackathonpro ;
+                  terraform init \
+                      -upgrade=true \
+                      -get=true \
+                      -input=true \
+                      -force-copy \
+                      -backend=true \
+                      -backend-config "bucket=devsecops-autodeploy-bucket" \
+                      -backend-config "key=terraform-${region}/${service}.tfstate" \
+                      -backend-config "region=${region}"
+                '''
+                sh """#!/bin/bash
+                  cd hackathonpro ; terraform workspace show | grep ${environment} ; if [ "\$?" == 0 ];then echo "workspace already exists ";else terraform workspace new ${environment}; fi;
+                echo "INFO: Terraform -> Working for ${environment}";
+                terraform plan -var region=${region} -out tfplan -lock=true;
+                terraform show -no-color tfplan > tfplan.txt;
+                """
+            }
+        }
+        stage('Approval') {
+          when {
+              not {
+                  equals expected: true, actual: params.autoApprove
+              }
+          }
+
+          steps {
+              script {
+                    def plan = readFile 'hackathonpro/tfplan.txt'
+                    input message: "Do you want to apply the plan?",
+                    parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
+              }
+          }
+      }
+
+        stage('Destroy') {
+            steps {
+                sh "cd hackathonpro ; terraform destroy -input=false tfplan "
+            }
+        }
+      
+    }
+
+  }
