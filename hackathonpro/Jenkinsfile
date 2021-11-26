@@ -68,7 +68,7 @@ pipeline {
 
         stage('${action}') {
             steps {
-                sh "cd hackathonpro ; terraform ${action} --auto-approve "
+                sh "cd hackathonpro ; terraform ${action} -input=false tfplan "
             }
         }
       
