@@ -1,20 +1,8 @@
-data "aws_ami" "amazon_linux_2" {
-  most_recent = true
-  owners      = ["amazon"]
-
-  filter {
-    name   = "name"
-    values = ["amzn2-ami-hvm-*-x86_64-ebs"]
-  }
-}
-
 resource "aws_instance" "web" {
   ami           = data.aws_ami.amazon_linux_2.id
   instance_type = "t2.micro"
 
-  root_block_device {
-    volume_size = 8
-  }
+ }
   
   user_data = <<-EOF
     #!/bin/bash
