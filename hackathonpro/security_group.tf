@@ -1,22 +1,23 @@
-module "dev_ssh_sg" {
-  source = "terraform-aws-modules/security-group/aws"
+# Security group for ECS (virtual firewall for your instance to control inbound and outbound traffic)
+resource "aws_security_group" "ec2_sg" {
+  vpc_id      = aws_vpc.vpc.id
+  name        = "ec2-security"
+  description = "allow all"
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
-  name        = "ec2_sg"
-  description = "Security group for ec2_sg"
-  vpc_id      = data.aws_vpc.default.id
-
-  ingress_cidr_blocks = ["127.0.0.1/32"]
-  ingress_rules       = ["ssh-tcp"]
-}
-
-module "ec2_sg" {
-  source = "terraform-aws-modules/security-group/aws"
-
-  name        = "ec2_sg"
-  description = "Security group for ec2_sg"
-  vpc_id      = data.aws_vpc.default.id
-
-  ingress_cidr_blocks = ["0.0.0.0/0"]
-  ingress_rules       = ["http-80-tcp", "https-443-tcp", "all-icmp"]
-  egress_rules        = ["all-all"]
+  tags = {
+    Name = "ec2_security"
+    Env  = var.project_environnement
+  }
 }
