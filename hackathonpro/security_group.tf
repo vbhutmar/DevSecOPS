@@ -1,6 +1,6 @@
 # Security group for ECS (virtual firewall for your instance to control inbound and outbound traffic)
 resource "aws_security_group" "ec2_sg" {
-  vpc_id      = aws_vpc.default.id
+  vpc_id      = data.aws_vpc.default.id
   name        = "ec2-security"
   description = "allow all"
   ingress {
