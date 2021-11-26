@@ -23,7 +23,7 @@ pipeline {
     stages {
         stage('checkout') {
             steps {
-                  git branch: "devsecops", url: "https://github.com/easyawslearn/Terraform-Tutorial.git"
+                  git branch: "devsecops", url: "https://github.com/vbhutmar/DevSecOps.git"
                   }
             }
 
