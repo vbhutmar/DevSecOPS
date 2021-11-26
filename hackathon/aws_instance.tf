@@ -1,4 +1,4 @@
-resource "aws_instance" "testweb" {
-   ami           = "ami-0108d6a82a783b352"
+resource "aws_instance" "web1" {
+   ami           = "${lookup(var.ami_id, var.region)}"
    instance_type = "t2.micro"
  }
