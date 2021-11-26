@@ -23,12 +23,12 @@ EOF
 
 resource "aws_iam_instance_profile" "ec2_profile" {
   name = "ec2_profile_devsecops"
-  role = aws_iam_role.ec2_role_devsecops.name
+  role = aws_iam_role.ec2_role.name
 }
 
 resource "aws_iam_role_policy" "ec2_policy" {
   name = "ec2_policy"
-  role = aws_iam_role.ec2_role_devsecops.id
+  role = aws_iam_role.ec2_role.id
 
   policy = <<EOF
 {
