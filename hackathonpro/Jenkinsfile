@@ -37,7 +37,7 @@ pipeline {
                       -input=true \
                       -force-copy \
                       -backend=true \
-                      -backend-config "bucket=devsecops-autodeploy" \
+                      -backend-config "bucket=devsecops-autodeploy-bucket" \
                       -backend-config "key=terraform-${region}/${service}.tfstate" \
                       -backend-config "region=${region}"
                 '''
