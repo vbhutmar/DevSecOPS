@@ -1,4 +1,4 @@
-esource "aws_iam_role" "ec2_role_devsecops" {
+resource "aws_iam_role" "ec2_role_devsecops" {
   name = "ec2_role_devsecops"
 
   assume_role_policy = <<EOF
