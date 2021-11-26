@@ -11,7 +11,4 @@ resource "aws_instance" "web" {
    }
 
    key_name                = "hackathon_demo"
-   monitoring              = true
-   disable_api_termination = false
-   ebs_optimized           = true
  }
