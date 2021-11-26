@@ -18,6 +18,6 @@ resource "aws_security_group" "ec2_sg" {
 
   tags = {
     Name = "ec2_security"
-    Env  = var.project_environnement
+    Env  = "dev"
   }
 }
