@@ -1,4 +1,4 @@
-resource "aws_iam_role" "ec2_role_devsecops" {
+resource "aws_iam_role" "ec2_role" {
   name = "ec2_role_devsecops"
 
   assume_role_policy = <<EOF
@@ -21,7 +21,7 @@ EOF
   }
 }
 
-resource "aws_iam_instance_profile" "ec2_profile_devsecops" {
+resource "aws_iam_instance_profile" "ec2_profile" {
   name = "ec2_profile_devsecops"
   role = aws_iam_role.ec2_role_devsecops.name
 }
