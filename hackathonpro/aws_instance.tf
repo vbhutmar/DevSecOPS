@@ -11,7 +11,9 @@ resource "aws_instance" "web" {
       sudo curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
       sudo chmod +x /usr/local/bin/docker-compose
       sudo docker pull nginx
-      sudo docker run -itd --name hackathon_demo nginx
+      sudo docker run -itd -p 80:80 --name hackathon_demo nginx
+      sudo docker pull nginxdemos/hello
+      sudo docker run -itd -p 8090:8090 --name hackathon_demo1 nginxdemos/hello
    EOF
    
    vpc_security_group_ids = [aws_security_group.ec2_sg.id]
