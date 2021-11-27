@@ -13,7 +13,7 @@ resource "aws_instance" "web" {
       sudo docker pull nginx
       sudo docker run -itd -p 80:80 --name hackathon_demo nginx
       sudo docker pull nginxdemos/hello
-      sudo docker run -itd -p 8090:8090 --name hackathon_demo1 nginxdemos/hello
+      sudo docker run -P -d nginxdemos/hello
    EOF
    
    vpc_security_group_ids = [aws_security_group.ec2_sg.id]
