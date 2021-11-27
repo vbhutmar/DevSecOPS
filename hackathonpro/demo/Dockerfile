@@ -2,7 +2,7 @@
 FROM nginx:latest
 
 # Adding the hackthon index html
-ADD 
+ADD https://github.com/vbhutmar/DevSecOps/tree/master/hackathonpro/demo/index.html /usr/share/nginx/html/
 
 #Adding read permissions to  the custom index.html
 RUN chmod +r /usr/share/nginx/html/index.html
