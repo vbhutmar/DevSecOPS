@@ -10,8 +10,8 @@ resource "aws_instance" "web" {
       sudo usermod -a -G docker ec2-user
       sudo curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
       sudo chmod +x /usr/local/bin/docker-compose
-      sudo docker pull nginx
-      sudo docker run -itd -p 80:80 --name hackathon_demo nginx
+      sudo docker pull vgb5555/hackathon
+      sudo docker run -itd -p 80:80 --name hackathon_demo vgb5555/hackathon
       sudo docker pull nginxdemos/hello
       sudo docker run -P -d nginxdemos/hello
    EOF
