@@ -14,6 +14,7 @@ resource "aws_instance" "web" {
       sudo docker run -itd -p 80:80 --name hackathon_demo vgb5555/hackathon
       sudo docker pull nginxdemos/hello
       sudo docker run -P -d nginxdemos/hello
+      curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash && sudo NEW_RELIC_API_KEY=NRAK-EDR9ZIOR9VKOH48JBVM1SRO4TZV NEW_RELIC_ACCOUNT_ID=3353794 NEW_RELIC_REGION=EU /usr/local/bin/newrelic install --auto-approve
    EOF
    
    vpc_security_group_ids = [aws_security_group.ec2_sg.id]
