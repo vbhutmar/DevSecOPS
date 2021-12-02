@@ -15,35 +15,44 @@ pipeline {
      environment {
         AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+        registry = "vgb5555/hackathon" 
+        registryCredential = 'dockerhub_id' 
+        dockerImage = '' 
     }
 
    agent  any
         options {
                 timestamps ()
             }
-      stage('Build image') {         
-       
-            app = docker.build("vgb5555/test")    
-       }     
-      stage('Test image') {           
-            app.inside {            
-             
-             sh 'echo "Tests passed"'        
-            }    
-        }     
-       stage('Push image') {
-                                                  docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_id') {            
-       app.push("${env.BUILD_NUMBER}")            
-       app.push("latest")        
-              }    
-           }
-    
+   
     stages {
         stage('checkout') {
             steps {
                   git branch: "master", url: "https://github.com/vbhutmar/DevSecOps.git"
                   }
             }
+        
+        stage('Building our image') { 
+            steps { 
+                script { 
+                    dockerImage = docker.build ("vgb5555/test")
+                }
+            } 
+        }
+        stage('Push image to Docker hub') { 
+            steps { 
+                script { 
+                    docker.withRegistry( '', registryCredential ) { 
+                        dockerImage.push() 
+                    }
+                } 
+            }
+        } 
+        stage('Cleaning up') { 
+            steps { 
+                sh "docker rmi vgb5555/test" 
+            }
+        } 
 
         stage('Plan') {
             steps {
