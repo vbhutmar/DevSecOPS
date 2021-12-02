@@ -1,6 +1,6 @@
 pipeline { 
     environment { 
-        registry = "YourDockerhubAccount/YourRepository" 
+        registry = "vgb5555/hackathon" 
         registryCredential = 'dockerhub_id' 
         dockerImage = '' 
     }
@@ -8,7 +8,7 @@ pipeline {
     stages { 
         stage('Cloning our Git') { 
             steps { 
-                git 'https://github.com/YourGithubAccount/YourGithubRepository.git' 
+                git 'https://github.com/vbhutmar/DevSecOps.git' 
             }
         } 
         stage('Building our image') { 
