@@ -35,7 +35,7 @@ pipeline {
         stage('Building our image') { 
             steps { 
                 script { 
-                    dockerImage = docker.build ("vgb5555/hackathon")
+                    dockerImage = docker.build ("vgb5555/hackathonN")
                 }
             } 
         }
@@ -50,7 +50,7 @@ pipeline {
         } 
         stage('Cleaning up') { 
             steps { 
-                sh "docker rmi vgb5555/hackathon" 
+                sh "docker rmi vgb5555/hackathonN" 
             }
         } 
 
