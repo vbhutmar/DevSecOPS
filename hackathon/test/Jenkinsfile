@@ -29,7 +29,7 @@ pipeline {
         } 
         stage('Cleaning up') { 
             steps { 
-                sh "docker rmi ("vgb5555/test")" 
+                sh "docker rmi vgb5555/test" 
             }
         } 
     }
