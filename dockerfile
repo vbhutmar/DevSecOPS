@@ -1,18 +1,11 @@
-# our base image
-FROM alpine:3.5
+# This is hackathon testing with nginx
+FROM nginx:latest
 
-# Install python and pip
-RUN apk add --update py2-pip
+# Adding the hackthon index html
+ADD https://github.com/vbhutmar/DevSecOps/tree/master/hackathonpro/demo/index.html /usr/share/nginx/html/
 
-# install Python modules needed by the Python app
-COPY requirements.txt /usr/src/app/
+#Adding read permissions to  the custom index.html
+RUN chmod +r /usr/share/nginx/html/index.html
 
-# copy files required for the app to run
-COPY app.py /usr/src/app/
-COPY index.html /usr/src/app/templates/
-
-# tell the port number the container should expose
-EXPOSE 5000
-
-# run the application
-CMD ["python", "/usr/src/app/app.py"]
+# nginx -g daemon off will run as default command when any container is running using dockerfile
+CMD ["nginx", "-g", "daemon off;"]
