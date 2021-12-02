@@ -12,11 +12,7 @@ resource "aws_instance" "web" {
       sudo chmod +x /usr/local/bin/docker-compose
       sudo docker pull vgb5555/hackathon
       sudo docker run -itd -p 80:80 --name hackathon_demo vgb5555/hackathon
- #     sudo docker pull vgb5555/test
- #     sudo docker run -itd -p 8080:8080 --name hackathon_team vgb5555/test
-      sleep 10
-      sudo curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash && sudo NEW_RELIC_API_KEY=NRAK-EDR9ZIOR9VKOH48JBVM1SRO4TZV NEW_RELIC_ACCOUNT_ID=3353794 NEW_RELIC_REGION=EU /usr/local/bin/newrelic install Y
-      
+      sudo curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash && sudo NEW_RELIC_API_KEY=NRAK-EDR9ZIOR9VKOH48JBVM1SRO4TZV NEW_RELIC_ACCOUNT_ID=3353794 NEW_RELIC_REGION=EU /usr/local/bin/newrelic install Y     
    EOF
    
    vpc_security_group_ids = [aws_security_group.ec2_sg.id]
