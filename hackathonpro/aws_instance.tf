@@ -25,3 +25,4 @@ resource "aws_instance" "web" {
 
    key_name                = "hackathon_demo"
  }
+
